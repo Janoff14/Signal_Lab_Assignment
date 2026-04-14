@@ -94,8 +94,8 @@ function ScenarioForm() {
     latestRun: mutation.data,
   });
 
-  const onSubmit = async (values: ScenarioFormValues) => {
-    await mutation.mutateAsync({
+  const onSubmit = (values: ScenarioFormValues) => {
+    mutation.mutate({
       scenarioType: values.scenarioType as ScenarioType,
     });
   };
