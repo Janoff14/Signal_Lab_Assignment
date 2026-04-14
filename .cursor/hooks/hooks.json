@@ -1,0 +1,14 @@
+{
+  "hooks": [
+    {
+      "name": "validate-sprint-status",
+      "event": "beforeResponse",
+      "command": "node .cursor/hooks/check-sprint-status.mjs"
+    },
+    {
+      "name": "validate-readme-workflow",
+      "event": "beforeResponse",
+      "command": "node .cursor/hooks/check-readme-workflow.mjs"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "id": null,
+  "title": "Signal Lab Overview",
+  "tags": ["signal-lab"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 2,
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Scenario Runs Total",
+      "description": "Cumulative scenario run counter broken down by scenario type and terminal status.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum by (scenario_type, status) (signal_lab_scenario_runs_total)",
+          "legendFormat": "{{scenario_type}} / {{status}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Error Rate",
+      "description": "Rate of error-status scenario runs per second over a 1-minute window.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(rate(signal_lab_scenario_runs_total{status=\"error\"}[1m])) or vector(0)",
+          "legendFormat": "errors/sec",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "red" },
+          "custom": { "fillOpacity": 15 }
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 }
+    },
+    {
+      "id": 3,
+      "type": "table",
+      "title": "Recent Scenario Logs (Loki)",
+      "description": "Latest structured log entries from the API service, filterable by scenarioType and runId.",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{job=\"signal-lab-api\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 8 }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Total Runs",
+      "description": "Aggregate count of all scenario runs across types and statuses.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(signal_lab_scenario_runs_total) or vector(0)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "blue" }
+        }
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 18 }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Total Errors",
+      "description": "Aggregate count of scenario runs that ended in error status.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(signal_lab_scenario_runs_total{status=\"error\"}) or vector(0)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "red" }
+        }
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 8, "y": 18 }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Total Successes",
+      "description": "Aggregate count of scenario runs that completed successfully.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(signal_lab_scenario_runs_total{status=\"success\"}) or vector(0)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        }
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 18 }
+    }
+  ]
+}

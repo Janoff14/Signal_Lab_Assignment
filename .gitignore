@@ -1,0 +1,22 @@
+node_modules
+dist
+.next
+.turbo
+*.tsbuildinfo
+
+# Environment files with secrets
+.env
+.env.local
+apps/api/.env
+apps/web/.env.local
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+*.swp
+
+# Prisma generated engine binaries (large)
+apps/api/node_modules/.prisma
+
+# Evidence screenshots (local only, referenced in checklist)
+evidence/

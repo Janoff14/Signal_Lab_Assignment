@@ -1,0 +1,97 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: signal-lab-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-signal_lab}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    image: node:20-alpine
+    container_name: signal-lab-api
+    restart: unless-stopped
+    working_dir: /workspace
+    command: sh -c "npm install && npm run start:dev --workspace apps/api"
+    environment:
+      PORT: ${API_PORT:-3001}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-signal_lab}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    ports:
+      - "${API_PORT:-3001}:3001"
+    volumes:
+      - ./:/workspace
+    depends_on:
+      - postgres
+
+  web:
+    image: node:20-alpine
+    container_name: signal-lab-web
+    restart: unless-stopped
+    working_dir: /workspace
+    command: sh -c "npm install && npm run dev --workspace apps/web"
+    environment:
+      WEB_PORT: ${WEB_PORT:-3000}
+      PORT: ${WEB_PORT:-3000}
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3001/api/v1}
+      NEXT_PUBLIC_METRICS_URL: ${NEXT_PUBLIC_METRICS_URL:-http://localhost:3001/metrics}
+      NEXT_PUBLIC_LOKI_URL: ${NEXT_PUBLIC_LOKI_URL:-http://localhost:3100}
+      NEXT_PUBLIC_GRAFANA_URL: ${NEXT_PUBLIC_GRAFANA_URL:-http://localhost:3000/grafana}
+      NEXT_PUBLIC_GRAFANA_EXTERNAL_URL: ${NEXT_PUBLIC_GRAFANA_EXTERNAL_URL:-http://localhost:3002}
+      NEXT_PUBLIC_SENTRY_URL: ${NEXT_PUBLIC_SENTRY_URL:-https://sentry.io/}
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      - ./:/workspace
+    depends_on:
+      - api
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: signal-lab-prometheus
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./infra/observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - api
+
+  loki:
+    image: grafana/loki:3.2.0
+    container_name: signal-lab-loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
+    ports:
+      - "${LOKI_PORT:-3100}:3100"
+    volumes:
+      - ./infra/observability/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: signal-lab-grafana
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/signal-lab-overview.json
+    ports:
+      - "${GRAFANA_PORT:-3002}:3000"
+    volumes:
+      - ./infra/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+      - loki
+
+volumes:
+  postgres_data:

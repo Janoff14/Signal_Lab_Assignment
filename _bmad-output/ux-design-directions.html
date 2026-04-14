@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Lab UX Design Directions</title>
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #dbe2ea;
+        --accent: #0ea5e9;
+        --success: #16a34a;
+        --warn: #d97706;
+        --error: #dc2626;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+      .wrap { max-width: 1280px; margin: 0 auto; padding: 24px; }
+      h1 { margin: 0 0 8px; font-size: 28px; }
+      p { margin: 0 0 16px; color: var(--muted); }
+      .nav {
+        position: sticky; top: 0; z-index: 20; background: #ffffffee; backdrop-filter: blur(6px);
+        border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; margin-bottom: 20px;
+        display: flex; flex-wrap: wrap; gap: 8px;
+      }
+      .nav a {
+        text-decoration: none; font-size: 13px; color: #0369a1; background: #e0f2fe;
+        padding: 6px 10px; border-radius: 999px; border: 1px solid #bae6fd;
+      }
+      .dir { margin: 30px 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #fff; }
+      .dir-head { padding: 14px 16px; border-bottom: 1px solid var(--border); background: #f8fafc; }
+      .dir-head h2 { margin: 0 0 6px; font-size: 18px; }
+      .dir-head small { color: var(--muted); }
+      .canvas { padding: 16px; }
+      .app { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--panel); }
+      .topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 14px; border-bottom: 1px solid var(--border); background: #fff;
+      }
+      .chips { display: flex; gap: 8px; }
+      .chip { font-size: 12px; border: 1px solid var(--border); padding: 4px 8px; border-radius: 999px; color: var(--muted); }
+      .chip.ok { color: #166534; background: #dcfce7; border-color: #bbf7d0; }
+      .chip.warn { color: #92400e; background: #fef3c7; border-color: #fde68a; }
+      .content { padding: 14px; display: grid; gap: 12px; }
+      .grid-2 { grid-template-columns: 1.2fr 1fr; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .card { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #fff; }
+      .card h3 { margin: 0 0 8px; font-size: 14px; }
+      .line { height: 10px; border-radius: 5px; background: #e2e8f0; margin: 6px 0; }
+      .line.sm { width: 45%; } .line.md { width: 70%; } .line.lg { width: 92%; }
+      .btn { border: 1px solid #7dd3fc; background: #0ea5e9; color: #fff; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 13px; }
+      .links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .link-card { border: 1px solid var(--border); border-radius: 10px; padding: 8px; font-size: 12px; }
+      .status { font-size: 12px; padding: 6px 8px; border-radius: 8px; display: inline-block; }
+      .s-run { background: #e0f2fe; color: #075985; }
+      .s-ok { background: #dcfce7; color: #166534; }
+      .s-err { background: #fee2e2; color: #991b1b; }
+      .dir.alt1 .topbar { background: #f0f9ff; }
+      .dir.alt2 .app { background: #f8fafc; }
+      .dir.alt2 .card { background: #ffffff; }
+      .dir.alt3 .topbar { background: #0f172a; color: #e2e8f0; }
+      .dir.alt3 .chip { border-color: #334155; color: #cbd5e1; background: #1e293b; }
+      .dir.alt4 .content { grid-template-columns: 260px 1fr; }
+      .sidebar { border: 1px solid var(--border); border-radius: 12px; padding: 10px; }
+      .menu-item { padding: 8px; border-radius: 8px; font-size: 13px; color: #334155; }
+      .menu-item.active { background: #e0f2fe; color: #075985; font-weight: 600; }
+      .dir.alt5 .card { border-style: dashed; }
+      .dir.alt6 .topbar { background: #ecfeff; }
+      .dir.alt6 .btn { background: #0891b2; border-color: #67e8f9; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Signal Lab Design Direction Showcase</h1>
+      <p>Explore 6 direction variants. Compare layout intuitiveness, visual weight, and confidence of feedback.</p>
+      <div class="nav">
+        <a href="#d1">Direction 1</a><a href="#d2">Direction 2</a><a href="#d3">Direction 3</a>
+        <a href="#d4">Direction 4</a><a href="#d5">Direction 5</a><a href="#d6">Direction 6</a>
+      </div>
+
+      <section class="dir" id="d1">
+        <div class="dir-head"><h2>Direction 1 - Balanced Command Center</h2><small>Safe default: clear cards, calm hierarchy, comfortable density.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip ok">API Healthy</span><span class="chip warn">Loki Pending</span></div></div>
+          <div class="content grid-2"><div class="card"><h3>Run Scenario</h3><div class="line lg"></div><div class="line md"></div><button class="btn">Run system_error</button></div><div class="card"><h3>Latest Run</h3><span class="status s-run">Running</span><div class="line lg"></div><div class="line sm"></div></div></div>
+          <div class="content"><div class="card"><h3>Observability Links</h3><div class="links"><div class="link-card">Prometheus</div><div class="link-card">Loki</div><div class="link-card">Grafana</div><div class="link-card">Sentry</div></div></div></div></div></div>
+      </section>
+
+      <section class="dir alt1" id="d2">
+        <div class="dir-head"><h2>Direction 2 - Signal-First Header</h2><small>Status at top, action below. Best when trust signals must be immediate.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip ok">Metric +1</span><span class="chip ok">Log Captured</span><span class="chip">Run #a81f</span></div></div>
+          <div class="content grid-3"><div class="card"><h3>Scenario</h3><div class="line lg"></div><button class="btn">Run</button></div><div class="card"><h3>Result</h3><span class="status s-ok">Success</span><div class="line md"></div></div><div class="card"><h3>Timing</h3><div class="line md"></div><div class="line sm"></div></div></div>
+          <div class="content"><div class="card"><h3>Quick Verify</h3><div class="links"><div class="link-card">/metrics</div><div class="link-card">/loki</div><div class="link-card">/grafana</div><div class="link-card">Sentry Issue</div></div></div></div></div></div>
+      </section>
+
+      <section class="dir alt2" id="d3">
+        <div class="dir-head"><h2>Direction 3 - Minimal Analyst View</h2><small>Low-noise visuals and restrained accents for calm operation.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip">Desktop Mode</span></div></div>
+          <div class="content grid-2"><div class="card"><h3>Action</h3><div class="line lg"></div><div class="line sm"></div><button class="btn">Run Scenario</button></div><div class="card"><h3>Output</h3><span class="status s-run">Pending Signals...</span><div class="line lg"></div></div></div>
+          <div class="content"><div class="card"><h3>Run History</h3><div class="line lg"></div><div class="line lg"></div><div class="line lg"></div></div></div></div></div>
+      </section>
+
+      <section class="dir alt3" id="d4">
+        <div class="dir-head"><h2>Direction 4 - Dark Toprail + Light Work Area</h2><small>Stronger technical tone while keeping content readable.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip">Run ID a81f</span><span class="chip">Updated 2s ago</span></div></div>
+          <div class="content grid-2"><div class="card"><h3>Scenario Runner</h3><div class="line lg"></div><button class="btn">Execute</button></div><div class="card"><h3>Telemetry State</h3><span class="status s-err">Sentry captured</span><div class="line md"></div></div></div>
+          <div class="content"><div class="card"><h3>Verification Cards</h3><div class="links"><div class="link-card">Metrics</div><div class="link-card">Logs</div><div class="link-card">Dashboard</div><div class="link-card">Errors</div></div></div></div></div></div>
+      </section>
+
+      <section class="dir alt4" id="d5">
+        <div class="dir-head"><h2>Direction 5 - Sidebar Workflow</h2><small>Guided navigation model with explicit "Start here" framing.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip ok">System Ready</span></div></div>
+          <div class="content"><div class="sidebar"><div class="menu-item active">Run Scenario</div><div class="menu-item">Latest Result</div><div class="menu-item">Verify Signals</div><div class="menu-item">History</div></div>
+            <div><div class="card"><h3>Run Scenario</h3><div class="line lg"></div><button class="btn">Run system_error</button></div><div class="card" style="margin-top:12px"><h3>Verify</h3><div class="links"><div class="link-card">Prometheus</div><div class="link-card">Loki</div><div class="link-card">Grafana</div><div class="link-card">Sentry</div></div></div></div></div>
+          </div></div></div>
+      </section>
+
+      <section class="dir alt6 alt5" id="d6">
+        <div class="dir-head"><h2>Direction 6 - Evidence Timeline</h2><small>Chronological confidence model: action then signal arrivals.</small></div>
+        <div class="canvas"><div class="app"><div class="topbar"><strong>Signal Lab</strong><div class="chips"><span class="chip">Run a81f</span><span class="chip warn">Loki waiting</span></div></div>
+          <div class="content"><div class="card"><h3>Trigger</h3><button class="btn">Run Scenario</button></div>
+          <div class="card"><h3>Evidence Timeline</h3><div class="line lg"></div><span class="status s-ok">Metric received</span><div class="line lg"></div><span class="status s-run">Log pending...</span><div class="line lg"></div><span class="status s-ok">Dashboard refreshed</span></div></div></div></div>
+      </section>
+    </div>
+  </body>
+</html>

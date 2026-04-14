@@ -1,0 +1,24 @@
+{
+  "name": "signal-lab",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace apps/web",
+    "dev:api": "npm run start:dev --workspace apps/api",
+    "stack:up": "docker compose up -d",
+    "stack:down": "docker compose down",
+    "verify:rehearsal": "node scripts/rehearsal-check.mjs",
+    "build": "npm run build --workspace packages/contracts && npm run build --workspace apps/web && npm run build --workspace apps/api",
+    "lint": "npm run lint --workspace packages/contracts && npm run lint --workspace apps/web && npm run lint --workspace apps/api",
+    "typecheck": "npm run typecheck --workspace packages/contracts && npm run typecheck --workspace apps/web && npm run typecheck --workspace apps/api",
+    "test": "npm run test --workspace packages/contracts && npm run test --workspace apps/web && npm run test --workspace apps/api",
+    "test:structure": "node scripts/check-structure.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Lab Color Themes</title>
+    <style>
+      body { font-family: Inter, "Segoe UI", sans-serif; margin: 0; background: #f8fafc; color: #0f172a; }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+      .theme { border: 1px solid #dbe2ea; border-radius: 14px; overflow: hidden; margin: 16px 0; background: #fff; }
+      .head { padding: 12px 14px; border-bottom: 1px solid #e2e8f0; font-weight: 600; }
+      .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 12px; }
+      .swatch { border: 1px solid #cbd5e1; border-radius: 10px; height: 80px; position: relative; }
+      .swatch span { position: absolute; left: 8px; bottom: 8px; font-size: 11px; background: rgba(255,255,255,.8); padding: 2px 6px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Signal Lab Theme Options</h1>
+      <p>Neutral-first palettes with restrained accents for a professional engineering dashboard tone.</p>
+
+      <section class="theme">
+        <div class="head">Theme A - Cyan Accent (Recommended)</div>
+        <div class="row">
+          <div class="swatch" style="background:#f8fafc"><span>bg #f8fafc</span></div>
+          <div class="swatch" style="background:#0ea5e9"><span>accent #0ea5e9</span></div>
+          <div class="swatch" style="background:#16a34a"><span>success #16a34a</span></div>
+          <div class="swatch" style="background:#d97706"><span>warn #d97706</span></div>
+          <div class="swatch" style="background:#dc2626"><span>error #dc2626</span></div>
+        </div>
+      </section>
+
+      <section class="theme">
+        <div class="head">Theme B - Blue Accent</div>
+        <div class="row">
+          <div class="swatch" style="background:#f8fafc"><span>bg #f8fafc</span></div>
+          <div class="swatch" style="background:#2563eb"><span>accent #2563eb</span></div>
+          <div class="swatch" style="background:#16a34a"><span>success #16a34a</span></div>
+          <div class="swatch" style="background:#ca8a04"><span>warn #ca8a04</span></div>
+          <div class="swatch" style="background:#dc2626"><span>error #dc2626</span></div>
+        </div>
+      </section>
+
+      <section class="theme">
+        <div class="head">Theme C - Slate + Teal Accent</div>
+        <div class="row">
+          <div class="swatch" style="background:#f1f5f9"><span>bg #f1f5f9</span></div>
+          <div class="swatch" style="background:#0f766e"><span>accent #0f766e</span></div>
+          <div class="swatch" style="background:#15803d"><span>success #15803d</span></div>
+          <div class="swatch" style="background:#b45309"><span>warn #b45309</span></div>
+          <div class="swatch" style="background:#b91c1c"><span>error #b91c1c</span></div>
+        </div>
+      </section>
+    </div>
+  </body>
+  </html>

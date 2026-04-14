@@ -1,0 +1,45 @@
+{
+  "skills": [
+    {
+      "name": "nextjs",
+      "source": "vercel",
+      "rationale": "App Router conventions, Server Components, layouts, data fetching, and deployment patterns. Core framework guidance that custom rules alone cannot fully cover."
+    },
+    {
+      "name": "react-best-practices",
+      "source": "vercel",
+      "rationale": "TSX quality checks for component structure, hooks usage, accessibility, performance, and TypeScript patterns. Complements our frontend-patterns rule with deeper analysis."
+    },
+    {
+      "name": "shadcn",
+      "source": "vercel",
+      "rationale": "Component installation, composition patterns, theming, and Tailwind integration for shadcn/ui. Prevents incorrect manual component creation when CLI can scaffold correctly."
+    },
+    {
+      "name": "verification",
+      "source": "vercel",
+      "rationale": "End-to-end flow verification: browser → API → data → response. Used after feature changes to confirm the full signal path works."
+    },
+    {
+      "name": "investigation-mode",
+      "source": "vercel",
+      "rationale": "Structured debugging triage: runtime logs → workflow status → browser verify → deploy/env. Triggers on frustration signals when observability checks fail."
+    },
+    {
+      "name": "observability",
+      "source": "vercel",
+      "rationale": "Instrumentation, monitoring dashboards, OpenTelemetry, and performance debugging. Extends our custom observability skill with platform-level insights."
+    },
+    {
+      "name": "workflow",
+      "source": "vercel",
+      "rationale": "Durable stepwise orchestration patterns. Informs the orchestrator skill's phase model and retry/resume design."
+    },
+    {
+      "name": "vercel-cli",
+      "source": "vercel",
+      "rationale": "Deployment commands, environment variable management, and project linking from terminal. Useful for CI/CD and deploy workflows."
+    }
+  ],
+  "custom_skills_complement": "Custom skills cover Signal Lab-specific concerns (scenario observability verification, story execution workflow, submission evidence mapping, PRD orchestration) that no marketplace skill addresses. Marketplace skills provide general framework and platform best practices."
+}
