@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateScenarioRunRequest } from "@signal-lab/contracts";
-import { fetchRecentScenarioRuns, fetchSignalStatus, submitScenarioRun } from "./api";
+import type { CreateScenarioRunRequest, ScenarioRunSubmitResponse } from "@signal-lab/contracts";
+import { fetchRecentScenarioRuns, fetchSignalStatus, submitScenarioRun, type SubmitResult } from "./api";
 import { scenarioRunQueryKeys } from "./query-keys";
 
 export function useSubmitScenarioRun() {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<SubmitResult, Error, CreateScenarioRunRequest>({
     mutationKey: scenarioRunQueryKeys.all,
-    mutationFn: (payload: CreateScenarioRunRequest) => submitScenarioRun(payload),
+    mutationFn: (payload) => submitScenarioRun(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: scenarioRunQueryKeys.history });
     },

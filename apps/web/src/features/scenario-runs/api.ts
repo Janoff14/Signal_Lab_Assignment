@@ -13,9 +13,13 @@ const endpointPath = SCENARIO_RUNS_PATH.startsWith("/api/v1")
   ? SCENARIO_RUNS_PATH.slice("/api/v1".length)
   : SCENARIO_RUNS_PATH;
 
+export type SubmitResult =
+  | { ok: true; data: ScenarioRunSubmitResponse }
+  | { ok: false; status: number; message: string };
+
 export async function submitScenarioRun(
   payload: CreateScenarioRunRequest,
-): Promise<ScenarioRunSubmitResponse> {
+): Promise<SubmitResult> {
   const response = await fetch(`${baseUrl}${endpointPath}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -28,11 +32,11 @@ export async function submitScenarioRun(
       const body = await response.json();
       message = body?.error?.message ?? body?.message ?? message;
     } catch { /* non-JSON response */ }
-    throw new Error(message);
+    return { ok: false, status: response.status, message };
   }
 
   const data = (await response.json()) as ApiSuccess<ScenarioRunSubmitResponse>;
-  return data.data;
+  return { ok: true, data: data.data };
 }
 
 export async function fetchRecentScenarioRuns(): Promise<ScenarioRunSummary[]> {

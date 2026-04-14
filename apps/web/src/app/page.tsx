@@ -49,9 +49,12 @@ const SIGNAL_BADGE: Record<string, { label: string; cls: string }> = {
 function ScenarioForm() {
   const mutation = useSubmitScenarioRun();
   const historyQuery = useRecentScenarioRuns();
+  const result = mutation.data;
+  const successData = result?.ok ? result.data : undefined;
+  const errorMessage = result && !result.ok ? result.message : undefined;
   const signalQuery = useSignalStatus(
-    mutation.data?.runId,
-    mutation.data?.scenarioType
+    successData?.runId,
+    successData?.scenarioType
   );
 
   const apiBase =
@@ -88,10 +91,10 @@ function ScenarioForm() {
 
   const uiState = getRunSubmissionUiState({
     isPending: mutation.isPending,
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
+    isSuccess: mutation.isSuccess && result?.ok === true,
+    isError: mutation.isError || (result?.ok === false),
     selectedScenario,
-    latestRun: mutation.data,
+    latestRun: successData,
   });
 
   const onSubmit = (values: ScenarioFormValues) => {
@@ -173,9 +176,9 @@ function ScenarioForm() {
               {formState.errors.scenarioType.message}
             </p>
           ) : null}
-          {mutation.isError ? (
+          {errorMessage ? (
             <p role="alert" className="mt-2 text-sm text-destructive">
-              {mutation.error.message}
+              {errorMessage}
             </p>
           ) : null}
           {uiState.acknowledgment ? (
